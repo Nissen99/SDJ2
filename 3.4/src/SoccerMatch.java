@@ -1,0 +1,72 @@
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Random;
+
+public class SoccerMatch  implements PropertyChangeSubject {
+
+	private String team0 = "Dream Team";
+	private String team1 = "Old Boys";
+	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	int oldTema = 0;
+	int oldTeam2 = 0;
+
+	public void startMatch() {
+		System.out.println("Match starting \n\n");
+		Random random = new Random();
+		for(int i = 0; i < 90; i++) {
+
+			int rand = random.nextInt(100);
+			int whichTeam = random.nextInt(2);
+
+			if(rand < 8) {
+				// score goal
+				scoreGoal(whichTeam);
+			} else if(rand < 12) {
+				// penalty
+				roughTackle(whichTeam);
+			}
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				break;
+			}
+		}
+		
+		System.out.println("\n\nMatch ended");
+	}
+
+	private void roughTackle(int whichTeam) {
+
+		if(whichTeam == 0) {
+			System.out.println(team0 + " Made rough tackel");
+		} else {
+			System.out.println(team1 + " Made rough tackel");
+		}
+		propertyChangeSupport.firePropertyChange("Tackel", 7, whichTeam);
+
+		oldTema = whichTeam;
+	}
+
+	private void scoreGoal(int whichTeam) {
+		if(whichTeam == 0) {
+			System.out.println(team0 + "SCOOOOOOOOOREEE");
+		} else {
+			System.out.println(team1 + "SCOOOOOOOOOREEE");
+		}
+		propertyChangeSupport.firePropertyChange("SCOOOOORE", 7, whichTeam);
+		oldTeam2 = whichTeam;
+	}
+
+	@Override public void addPropertyChangeListener(
+			PropertyChangeListener listener)
+	{
+		propertyChangeSupport.addPropertyChangeListener(listener);
+	}
+
+	@Override public void removePropertyChangeListener(
+			PropertyChangeListener listener)
+	{
+		propertyChangeSupport.removePropertyChangeListener(listener);
+	}
+}
