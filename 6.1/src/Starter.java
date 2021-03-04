@@ -21,7 +21,6 @@ public class Starter
 
     Thread.sleep(2000);
 
-    radiator.turnDown();
 
 Thread.sleep(5000);
 
