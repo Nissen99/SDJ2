@@ -1,12 +1,14 @@
+package transferobjects;
+
 import java.io.Serializable;
 
-public class Message implements Serializable
+public class Request implements Serializable
 {
 
 
   private String text;
 
-  public Message(String text){
+  public Request(String text){
     this.text = text;
   }
 
