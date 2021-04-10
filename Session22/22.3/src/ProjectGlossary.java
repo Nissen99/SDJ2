@@ -1,64 +1,142 @@
 import java.util.ArrayList;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class ProjectGlossary
 {
-  private ArrayList<GlossaryItem> glossaryItems = new ArrayList<>();
 
 
-  public ProjectGlossary(){}
+  private static Map<String, ProjectGlossary> allInstances = new HashMap<>();
+  private String key;
+  private static ReentrantLock lock = new ReentrantLock();
 
-  public int size(){
-    return glossaryItems.size();
+  private List<GlossaryItem> items = new ArrayList<>();
+
+  private ProjectGlossary(String key)  {
+    this.key = key;
+    System.out.println("---------------------" + key + "----------------------");
   }
 
-  public ArrayList<GlossaryItem> getGlossaryItems()
-  {
-    return glossaryItems;
-  }
 
-  public String getDefinition(String phrase){
+  public static ProjectGlossary getInstance(String key){
 
-    for (GlossaryItem glossary: glossaryItems)
-    {
-      if (glossary.getPhrase().equals(phrase)){
-        return glossary.getDefinition();
-      }
-          }
-  return null;
-  }
 
-  public void addItem(String phrase, String definition){
+    ProjectGlossary instance = allInstances.get(key);
 
-      if (getDefinition(phrase) == null)
+
+
+    if (instance == null){
+    synchronized (ProjectGlossary.class){
+      if (instance == null)
       {
-        glossaryItems.add(new GlossaryItem(phrase, definition));
-      }
-      else {
-        throw new IllegalStateException("This shit is in here");
-      }
+        instance = new ProjectGlossary(key);
+        allInstances.put(key, instance);
+      }}}
+
+    return instance;
   }
 
-  public void removeItem(String phrase){
-    for (GlossaryItem glossary: glossaryItems)
-    {
-      if (glossary.getPhrase().equals(phrase)){
-        glossaryItems.remove(glossary);
-        return;
-      }
-    }
-  }
+  public int size()
 
-  public String toString(){
-    String returnString = "";
-    for (GlossaryItem g :glossaryItems)
-    {
-      returnString += g.toString() + "\n";
-    }
-    return returnString;
-  }
-
-  public ArrayList<GlossaryItem> getAll()
   {
-    return glossaryItems;
+
+    return items.size();
+
   }
+
+  public GlossaryItem[] getAll()
+
+  {
+
+    GlossaryItem[] array = new GlossaryItem[items.size()];
+
+    return items.toArray(array);
+
+  }
+
+  public String getDefinition(String phrase)
+
+  {
+
+    for (GlossaryItem item : items)
+
+    {
+
+      if (item.getPhrase().equalsIgnoreCase(phrase))
+
+      {
+
+        return item.getDefinition();
+
+      }
+
+    }
+
+    return null;
+
+  }
+
+  public void addItem(String phrase, String definition)
+
+  {
+
+    if (getDefinition(phrase) != null)
+
+    {
+
+      throw new IllegalStateException(
+
+          "Glossary phrase already exist: " + phrase);
+
+    }
+
+    items.add(new GlossaryItem(phrase, definition));
+
+  }
+
+  public void removeItem(String phrase)
+
+  {
+
+    items.remove(new GlossaryItem(phrase, getDefinition(phrase)));
+
+  }
+
+  public String toString()
+
+  {
+
+    String s = "";
+
+    if (items.size() == 0)
+
+    {
+
+      s += "[Empty]";
+
+    }
+
+    for (int i = 0; i < items.size(); i++)
+
+    {
+
+      s += "- " + items.get(i);
+
+      if (i < items.size() - 1)
+
+      {
+
+        s += "\n";
+
+      }
+
+    }
+
+    return s;
+
+  }
+
 }

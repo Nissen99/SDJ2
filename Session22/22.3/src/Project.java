@@ -1,37 +1,84 @@
 public class Project
-{
-  private String name;
-  private ProjectGlossary glossary = new ProjectGlossary();
 
-  public Project(String name){
+{
+
+  private String name;
+  private ProjectGlossary glossary;
+
+  public Project(String name, String language)
+
+  {
+
     this.name = name;
+
+    this.glossary = ProjectGlossary.getInstance(language);
+
   }
 
   public String getName()
+
   {
+
     return name;
+
   }
 
   public ProjectGlossary getGlossary()
+
   {
+
     return glossary;
+
   }
 
-  public String getDefinition(String phrase){
+  public String getDefinition(String phrase)
+
+  {
+
     return glossary.getDefinition(phrase);
+
   }
 
-  public void addGlossaryItem(String phrase, String definition){
+  public void addGlossaryItem(String phrase, String definition)
+
+  {
+
     glossary.addItem(phrase, definition);
+
   }
 
-  public void removeGlossaryItem(String phrase){
+  public void removeGlossaryItem(String phrase)
+
+  {
+
     glossary.removeItem(phrase);
+
   }
 
-  public String toString(){
-    return glossary.toString();
-  }
+  @Override public String toString()
 
+  {
+
+    String s = "Project: " + name;
+
+    if (glossary.size() > 0)
+
+    {
+
+      s += "\n" + glossary;
+
+    }
+
+    else
+
+    {
+
+      s += " [No glossary]";
+
+    }
+
+    return s;
+
+  }
 
 }
