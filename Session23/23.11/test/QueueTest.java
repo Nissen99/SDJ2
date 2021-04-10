@@ -19,11 +19,7 @@ class QueueTest
     @Test
     public void testThatQGetsRemove(){
 
-
-      queue.enqueue("Hello");
-      queue.enqueue("My");
-      queue.enqueue("Name");
-      queue.enqueue("Is");
+      putInLine();
 
       //act
       queue.dequeue();
@@ -36,10 +32,7 @@ class QueueTest
     @Test
     public void testThatItTrhowsStuff(){
 
-      queue.enqueue("Hello");
-      queue.enqueue("My");
-      queue.enqueue("Name");
-      queue.enqueue("Is");
+      putInLine();
 
       //act
       queue.dequeue();
@@ -53,10 +46,7 @@ class QueueTest
 
     @Test
   public void testThatIsEmptyWorks(){
-      queue.enqueue("Hello");
-      queue.enqueue("My");
-      queue.enqueue("Name");
-      queue.enqueue("Is");
+      putInLine();
 
       //act
       queue.dequeue();
@@ -70,11 +60,7 @@ class QueueTest
     @Test
   public void ThatContainsIsNotBad(){
 
-      queue.enqueue("Hello");
-      queue.enqueue("My");
-      queue.enqueue("Name");
-      queue.enqueue("Is");
-
+      putInLine();
 
       assertEquals(true, queue.contains("Hello"));
 
@@ -82,19 +68,18 @@ class QueueTest
   @Test
   public void ThatContainsIsNotBad2(){
 
-    queue.enqueue("Hello");
-    queue.enqueue("My");
-    queue.enqueue("Name");
-    queue.enqueue("Is");
-
-
+    putInLine();
 
     assertEquals(false, queue.contains("HelloMyNameIs"));
 
   }
 
-
-
-
-
+  private void putInLine()
+  {
+    queue.enqueue("Hello");
+    queue.enqueue("My");
+    queue.enqueue("Name");
+    queue.enqueue("Is");
   }
+
+}
