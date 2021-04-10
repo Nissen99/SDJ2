@@ -68,7 +68,7 @@ class QueueTest
     }
 
     @Test
-  public void ThatContaisIsNotBad(){
+  public void ThatContainsIsNotBad(){
 
       queue.enqueue("Hello");
       queue.enqueue("My");
@@ -76,21 +76,16 @@ class QueueTest
       queue.enqueue("Is");
 
 
-
-
-
       assertEquals(true, queue.contains("Hello"));
 
     }
   @Test
-  public void ThatContaisIsNotBad2(){
+  public void ThatContainsIsNotBad2(){
 
     queue.enqueue("Hello");
     queue.enqueue("My");
     queue.enqueue("Name");
     queue.enqueue("Is");
-
-
 
 
 
